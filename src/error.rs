@@ -1,7 +1,7 @@
 use crate::parse::Error;
 use core::fmt::{self, Debug, Display};
 
-pub(crate) enum ErrorKind {
+pub enum ErrorKind {
     Empty,
     UnexpectedEnd(Position),
     UnexpectedChar(Position, char),
@@ -17,7 +17,7 @@ pub(crate) enum ErrorKind {
 }
 
 #[derive(Copy, Clone, Eq, PartialEq)]
-pub(crate) enum Position {
+pub enum Position {
     Major,
     Minor,
     Patch,

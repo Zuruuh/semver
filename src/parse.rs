@@ -152,6 +152,10 @@ impl Error {
     fn new(kind: ErrorKind) -> Self {
         Error { kind }
     }
+
+    pub fn kind(&self) -> &ErrorKind {
+        &self.kind
+    }
 }
 
 impl Op {
