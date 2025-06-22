@@ -29,6 +29,7 @@ impl FromStr for Version {
         if text.is_empty() {
             return Err(Error::new(ErrorKind::Empty));
         }
+        let text = text.strip_prefix('v').unwrap_or(text);
 
         let mut pos = Position::Major;
         let (major, text) = numeric_identifier(text, pos)?;
@@ -36,10 +37,13 @@ impl FromStr for Version {
 
         pos = Position::Minor;
         let (minor, text) = numeric_identifier(text, pos)?;
-        let text = dot(text, pos)?;
+        let (patch, text) = if let Some(text) = text.strip_prefix('.') {
+            pos = Position::Patch;
 
-        pos = Position::Patch;
-        let (patch, text) = numeric_identifier(text, pos)?;
+            numeric_identifier(text, pos)?
+        } else {
+            (0, text)
+        };
 
         if text.is_empty() {
             return Ok(Version::new(major, minor, patch));

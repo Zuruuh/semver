@@ -26,12 +26,6 @@ fn test_parse() {
         "unexpected end of input while parsing major version number",
     );
 
-    let err = version_err("1.2");
-    assert_to_string(
-        err,
-        "unexpected end of input while parsing minor version number",
-    );
-
     let err = version_err("1.2.3-");
     assert_to_string(err, "empty identifier segment in pre-release identifier");
 
@@ -143,6 +137,16 @@ fn test_parse() {
 
     // for https://nodejs.org/dist/index.json, where some older npm versions are "1.1.0-beta-10"
     let parsed = version("1.1.0-beta-10");
+    let expected = Version {
+        major: 1,
+        minor: 1,
+        patch: 0,
+        pre: prerelease("beta-10"),
+        build: BuildMetadata::EMPTY,
+    };
+    assert_eq!(parsed, expected);
+
+    let parsed = version("v1.1-beta-10");
     let expected = Version {
         major: 1,
         minor: 1,
