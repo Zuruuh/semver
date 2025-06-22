@@ -107,7 +107,7 @@ use core::str::FromStr;
 #[allow(unused_imports)]
 use crate::backport::*;
 
-pub use crate::parse::Error;
+pub use crate::parse::*;
 
 /// **SemVer version** as defined by <https://semver.org>.
 ///
